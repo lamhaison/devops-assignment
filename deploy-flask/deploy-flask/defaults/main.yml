@@ -1,0 +1,9 @@
+---
+# defaults file for deploy-flask
+nginx_ppa_version: stable
+source_dir: "/opt/absolute/source"
+git_repo: "https://github.com/lamhaison/flask-deploy.git"
+socket_file: "/opt/absolute/simple-app.sock"
+uwsgi_file: "/opt/absolute/uwsgi.ini"
+env_dir: "/opt/absolute/flask_env"
+uwsgi_log_dir: "/var/log/uwsgi"

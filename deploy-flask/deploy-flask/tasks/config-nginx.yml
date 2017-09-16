@@ -1,0 +1,11 @@
+- name: delete defaul nginx file
+  file: state=absent path={{item}}
+  with_items:
+    - "/etc/nginx/conf.d/default"
+    - "/etc/nginx/conf.d/default.conf"
+    - "/etc/nginx/sites-available/default.conf"
+    - "/etc/nginx/sites-available/default"
+
+- name: configure nginx
+  template: src=flask.conf dest=/etc/nginx/conf.d/flask.conf
+  notify: Restart Nginx

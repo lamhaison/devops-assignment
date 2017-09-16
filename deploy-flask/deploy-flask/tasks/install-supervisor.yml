@@ -1,0 +1,8 @@
+---
+- name: install supervisor
+  apt:
+    name: supervisor
+    state: present
+
+- name: Ensure supervisor is started and enabled to start at boot.
+  service: name=supervisor state=started enabled=yes

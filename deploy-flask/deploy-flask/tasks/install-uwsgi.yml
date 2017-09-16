@@ -1,0 +1,6 @@
+---
+- name: install python-dev package
+  apt: pkg=python-dev state=present
+
+- name: install uwsgi server
+  shell: pip install uwsgi

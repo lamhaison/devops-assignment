@@ -1,0 +1,24 @@
+---
+# tasks file for deploy-flask
+# Install nginx
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: install build utilities
+  apt: pkg="{{ item }}" state=present
+  with_items:
+    - python-pip
+    - build-essential
+    - git
+    - python-dev
+
+- include: install-flask.yml
+- include: install-nginx.yml
+- include: install-uwsgi.yml
+- include: install-supervisor.yml
+- include: config-nginx.yml
+- include: config-uwsgi.yml
+- include: config-supervisor.yml
+- include: restart-service.yml

@@ -1,0 +1,10 @@
+- name: render uwsgi.ini file configuration for uwsgi
+  template:
+    src: uwsgi.ini
+    dest: "{{ uwsgi_file }}"
+
+- name: create log file for uwsgi
+  file:
+    path: "{{ uwsgi_log_dir }}"
+    state: directory
+    mode: 0755

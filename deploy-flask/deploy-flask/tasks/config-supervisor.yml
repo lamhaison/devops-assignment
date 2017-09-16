@@ -1,0 +1,5 @@
+- name: render supervisor file
+  template:
+    src: run-flask-app.conf
+    dest: "/etc/supervisor/conf.d/run-flask-app.conf"
+

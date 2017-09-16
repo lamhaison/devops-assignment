@@ -1,0 +1,13 @@
+---
+- name: Add PPA for Nginx.
+  apt_repository:
+    repo: 'ppa:nginx/{{ nginx_ppa_version }}'
+    state: present
+    update_cache: yes
+
+- name: Ensure nginx will install
+  apt:
+    name: nginx
+    state: present
+- name: Ensure nginx is started and enabled to start at boot.
+  service: name=nginx state=started enabled=yes

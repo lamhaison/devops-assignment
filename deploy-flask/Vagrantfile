@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+$script = <<SCRIPT
+echo "install required packages"
+apt-get -y install git python-pip
+echo "clone source"
+mkdir /opt/absolute
+cd /opt/absolute && git clone https://github.com/lamhaison/devops-assignment.git .
+
+echo Installing dependencies...
+pip install virtualenv
+virtualenv /opt/flask_env
+source /opt/flask_env/bin/activate
+pip install -r requirements.txt
+
+echo "run appication"
+export FLASK_APP=simple_app.py && flask run --host=0.0.0.0
+
+SCRIPT
+
+# Specify a custom Vagrant box for the demo
+DEMO_BOX_NAME =  ENV['DEMO_BOX_NAME'] || "ubuntu/trusty64"
+
+# Vagrantfile API/syntax version.
+# NB: Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = DEMO_BOX_NAME
+
+  config.vm.provision "shell", inline: $script
+
+  config.vm.define "n1" do |n1|
+      n1.vm.hostname = "n1"
+      n1.vm.network "private_network", ip: "172.20.20.10"
+  end
+end

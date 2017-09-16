@@ -1,0 +1,27 @@
+- name: create source folder
+  file:
+    path: "{{ source_dir }}"
+    state: directory
+    mode: 0755
+
+- name: clone source
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ source_dir }}"
+#    version: "{{ git_repo | default('master') }}"
+
+
+- name: install virtualenv
+  shell: pip install virtualenv
+
+- name: Check exist origin configruation
+  stat: path="{{ env_dir }}"
+  register: exist_env_dir
+
+- name: create virtualenv
+  shell: "virtualenv {{ env_dir }}"
+  when: exist_env_dir.stat.isdir is not defined
+
+
+- name: install requirement package
+  shell: "{{ env_dir }}/bin/pip install -r {{ source_dir }}/requirements.txt"
